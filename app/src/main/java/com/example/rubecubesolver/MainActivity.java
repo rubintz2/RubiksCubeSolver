@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Random;
 
 import static com.example.rubecubesolver.Colors.*;
-import static com.example.rubecubesolver.PermuteLastLayer.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,37 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        String mix = "D B' R D' R2 B U' B U F L' F' U' F U' L2 R2 B' F' D";
-//        String mix = "F D R2 D2 R D' U B' F2 R D U F2 B L2 B D2 R D L";
-//        String mix = "B2 U' B2 U' R2 U B2 D2 L2 R2 U' R D L' R B R2 F' D2 L";
-//        String mix = "U2 F2 L' D2 R B2 L B2 R2 U2 L' U L2 R F D' B R' U' R2 U2";
-//        String mix = "F R' U' F B2 L U D R D2 F2 R' U2 R' F2 R U2 F2 R2 B2 D'";
-//        String mix = "B' D L2 U' L U2 B' U' R2 U L2 U F2 U' F2 U R2 D2 L2";
-//        String mix = "D2 B R2 F U2 R2 U2 F2 D2 R2 B2 L U' B D2 L' R' D2 F2 L'";
-//        String mix = "U' D2 F' R' B L' B' U' R' F2 D2 L2 F2 U2 B U2 F' U2 R2 B'";
-//        String mix = "D' R' F2 U' R2 U B2 D' F2 D F2 U B2 D2 F' L' B2 R' U2 B' R2";
-//        String mix = "F2 R2 B' R2 D2 B2 U R2 U2 B2 U' B2 F2 D L' R2 D2 R' B L2 U'";
-//        String mix = "F2 D' F2 D2 R' D2 F2 L' U2 R D2 B2 L' R' U' L U2 F R' D U'";
-//        String mix = "L2 U B2 D2 F2 R2 U L2 D2 L2 F2 D' F L F2 L2 D' L B D U'";
-//        String mix = "F2 R' B' D R' F' R' U L U R2 B2 L2 D2 B2 U' R2 U F2 R2 D2";
-//        String mix = "U' L U2 F2 U B' L' R2 U L2 D B2 L2 U B2 D2 F2 R2 U B U";
-//        String mix = "R' D' R2 U F' B R' D2 B' F2 R2 U2 F2 U B2 U L2 U' L2 D' R2";
-//        String mix = "U' L B' D' F' D2 F2 L' D' R2 U2 D2 F R2 F R2 B2 L2 F2 L2 D2";
-//        String mix = "R F2 R F2 D2 L D2 B2 L D2 R' U2 D' F' D2 L' U B' F R B'";
-//        String mix = "B2 D2 B2 R2 F2 R D2 R' B2 R' F2 B' D R2 B2 L' F2 R2 F D";
-//        String mix = "R2 F U B2 D R2 U2 L2 U' L2 F2 R B L' F2 L D2 L B2";
-//        String mix = "U' L B2 D B2 L F' R2 D2 L B2 L F2 U2 B2 L2 F2 R' U2 D";
-//        rubeCube.mix(mix);
-//        System.out.println(rubeCube);
-//        Map<Edge, ArrayList<String>> crossSolution = Cross.solve(rubeCube);
-//        System.out.println(rubeCube);
-//        Map<Corner, ArrayList<String>> f2LSolution = FirstTwoLayers.solve(rubeCube);
-//        System.out.println(rubeCube);
-//        ArrayList<String> oLLSolution = OrientLastLayer.solve(rubeCube);
-//        System.out.println(rubeCube);
         tester();
-
     }
     public boolean crossSolved(Cube cube) {
         Edge[] crossEdges = cube.getEdges(cube.getFace(WHITE).getEdgeLocs());
@@ -158,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
         double totalMoves = 0;
         int moves;
 
+        int correctAlgs = 0;
+
         int totalTests = 1000;
         for (int i = 1; i <= totalTests; i++) {
             Cube cube1 = new Cube();
@@ -223,6 +194,23 @@ public class MainActivity extends AppCompatActivity {
             totalMoves += oLLSolution.size() + pLLSolution.size();
             moves += oLLSolution.size() + pLLSolution.size();
             System.out.println("Moves taken: " + moves + " moves");
+
+            Cube cube2 = new Cube();
+            cube2.mix(scramble);
+            cube2.mix(crossSolution.get(cube1.getEdge(WHITE, ORANGE)));
+            cube2.mix(crossSolution.get(cube1.getEdge(WHITE, GREEN)));
+            cube2.mix(crossSolution.get(cube1.getEdge(WHITE, BLUE)));
+            cube2.mix(crossSolution.get(cube1.getEdge(WHITE, RED)));
+            cube2.mix(f2LSolution.get(cube1.getCorner(BLUE, WHITE, RED)));
+            cube2.mix(f2LSolution.get(cube1.getCorner(BLUE, WHITE, ORANGE)));
+            cube2.mix(f2LSolution.get(cube1.getCorner(GREEN, WHITE, ORANGE)));
+            cube2.mix(f2LSolution.get(cube1.getCorner(GREEN, WHITE, RED)));
+            cube2.mix(oLLSolution);
+            cube2.mix(pLLSolution);
+            if (cube2.solved()) {
+                correctAlgs++;
+            }
+            System.out.println("Cube #" + i + ".0 Solved? " + cube2.solved());
         }
         System.out.println(" \nTotal crosses solved: " + numCrossSolved + "/" + totalTests);
         System.out.println("Total F2L solved: " + numF2LSolved + "/" + totalTests);
@@ -231,5 +219,6 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Total correct solves: " + numSolved + "/" + totalTests);
 
         System.out.println("Average moves taken: " + totalMoves/totalTests + " moves");
+        System.out.println("Total correct algs: " + correctAlgs + "/" + totalTests);
     }
 }

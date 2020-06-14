@@ -61,30 +61,43 @@ public final class Colors {
         return move;
     }
     public static void fixSolution(ArrayList<String> solution) {
-        solution.add("temp");
-        for (int i = 0; i < solution.size() - 1; i++) {
-            try {
-                if (solution.get(i).equals(solution.get(i + 1))) {
-                    if (solution.get(i + 2).equals(solution.get(i))) {
-                        solution.remove(i + 1);
-                        solution.remove(i + 1);
-                        if (solution.get(i).contains("'")) {
-                            solution.set(i, solution.get(i).substring(0,1));
+        String currentMove;
+        String nextMove;
+        for (int j = 0; j < 4; j++) {
+            for (int i = 0; i < solution.size(); i++) {
+                currentMove = solution.get(i);
+                try {
+                    nextMove = solution.get(i + 1);
+                } catch (IndexOutOfBoundsException e) {
+                    break;
+                }
+                String bigMove = currentMove + nextMove;
+                if (currentMove.substring(0, 1).equals(nextMove.substring(0, 1))) {
+                    if (currentMove.equals(nextMove)) {
+                        if (currentMove.endsWith("2")) {
+                            solution.remove(i);
+                            solution.remove(i);
                         } else {
-                            solution.set(i, solution.get(i) + "'");
+                            solution.remove(i);
+                            solution.set(i, currentMove.substring(0, 1));
+                            solution.set(i, solution.get(i) + "2");
                         }
                     } else {
-                        solution.remove(i + 1);
-                        if (solution.get(i).contains("'")) {
-                            solution.set(i, solution.get(i).substring(0,1));
+                        if (!bigMove.contains("2")) {
+                            solution.remove(i);
+                            solution.remove(i);
+                        } else {
+                            solution.remove(i);
+                            if (bigMove.contains("'")) {
+                                solution.set(i, bigMove.substring(0, 1));
+                            } else {
+                                solution.set(i, bigMove.substring(0, 1) + "'");
+                            }
                         }
-                        solution.set(i, solution.get(i) + "2");
                     }
+                    i--;
                 }
-            } catch (IndexOutOfBoundsException e) {
-                break;
             }
         }
-        solution.remove(solution.size() - 1);
     }
 }
