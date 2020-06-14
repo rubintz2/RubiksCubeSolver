@@ -1,0 +1,55 @@
+Corner Notes:
+
+For Location Variable
+- there will be 4 front-side and 4 back-side pieces
+- Each side will have the following:
+    (1,4,2): top right - 1
+    (2,3,1): top left - 2
+    (3,2,4): bottom left - 3
+    (4,1,3): bottom right - 4
+For Orientation Variable
+- it will be represented by an integer
+    0: White/yellow side is on correct face or opposite face
+    1: Piece must be rotated CW to get to 0 orientation
+    -1: Piece must be rotated CCW to get to 0 orientation
+- at (0), 1
+    location 1 is (0)
+    location 2 is CW(1)
+    location 3 is (0)
+    location 4 is CW(1)
+- at (1), 1
+    location 1 is (1)
+    location 2 is (-1)
+    location 3 is (1)
+    location 4 is (-1)
+- at (-1), 1
+    location 1 is (-1)
+    location 2 is (0)
+    location 3 is (-1)
+    location 4 is (0)
+- at (0), 2
+    location 1 is (-1)
+    location 2 is (0)
+    location 3 is (-1)
+    location 4 is (0)
+- at (1), 2
+    location 1 is (0)
+    location 2 is CW(1)
+    location 3 is (0)
+    location 4 is CW(1)
+
+For Color Variable
+- it will be a final array of size 3 of characters
+- represents colors of the corner
+
+For future versions:
+- have yellow/white color of edge always in the same position in the Edge colors array
+Cube solver improvements:
+Cross:
+- When edge is in middle layer and matched with correct color
+	Current: brings up to top layer then rematches edge with correct center
+	Ideal: just solve in one move as is intuitive
+F2L:
+- When pair is already split insertable
+    Current: first connects pair and separates pair again into split insert form
+    Ideal: identify automatic split insert
