@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tester();
+        System.out.println(getSolution(generateScramble(20)));
     }
     public boolean crossSolved(Cube cube) {
         Edge[] crossEdges = cube.getEdges(cube.getFace(WHITE).getEdgeLocs());
@@ -28,6 +28,37 @@ public class MainActivity extends AppCompatActivity {
         }
         System.out.println("Cross solved? " + crossSolved);
         return crossSolved;
+    }
+    public String getSolution(String scramble) {
+        Cube cube = new Cube();
+        String solution = "";
+        cube.mix(scramble);
+        solution += "\nScramble: " + scramble;
+        Map<Edge, ArrayList<String>> crossSolution = Cross.solve(cube);
+        solution += "\nCROSS SOLUTION\n";
+        solution += "Orange cross piece solution:\n";
+        solution += crossSolution.get(cube.getEdge(WHITE, ORANGE));
+        solution += "\nGreen cross piece solution:\n";
+        solution += crossSolution.get(cube.getEdge(WHITE, GREEN));
+        solution += "\nBlue cross piece solution:\n";
+        solution += crossSolution.get(cube.getEdge(WHITE, BLUE));
+        solution += "\nRed cross piece solution:\n";
+        solution += crossSolution.get(cube.getEdge(WHITE, RED));
+        Map<Corner, ArrayList<String>> f2LSolution = FirstTwoLayers.solve(cube);
+        solution += "\nF2L SOLUTION\n";
+        solution += "Blue, red pair solution:\n";
+        solution += f2LSolution.get(cube.getCorner(BLUE, WHITE, RED));
+        solution += "\nBlue, orange pair solution:\n";
+        solution += f2LSolution.get(cube.getCorner(BLUE, WHITE, ORANGE));
+        solution += "\nGreen, orange pair solution:\n";
+        solution += f2LSolution.get(cube.getCorner(GREEN, WHITE, ORANGE));
+        solution += "\nGreen, red pair solution:\n";
+        solution += f2LSolution.get(cube.getCorner(GREEN, WHITE, RED));
+        solution += "\nOLL SOLUTION:\n" ;
+        solution += OrientLastLayer.solve(cube);
+        solution += "\nPLL SOLUTION:\n" ;
+        solution += PermuteLastLayer.solve(cube);
+        return solution;
     }
     public boolean f2lSolved(Cube cube) {
         int[] f2lEdgeLocs = {3,4,7,8};
