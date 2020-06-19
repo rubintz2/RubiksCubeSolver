@@ -1,7 +1,5 @@
 package com.example.rubecubesolver;
 
-import java.util.ArrayList;
-
 import static com.example.rubecubesolver.Colors.*;
 
 public class Face {
@@ -10,7 +8,6 @@ public class Face {
     private final int[] corSides;
     private final int[] edgeLocs;
     private final int faceColor;
-    private static ArrayList<String> solution = new ArrayList<>();
     public Face(Cube setCube, int[][] setCorners, int[] sides, int[] setEdges, int setFaceColor) {
         cube = setCube;
         corLocs = setCorners;
@@ -63,20 +60,5 @@ public class Face {
                 + "\t\t" + colorsAsString(edges[eOrder[3]].colorOnFace(faceColor))
                 + "\t\t" + colorsAsString(corners[cOrder[3]].colorOnFace(faceColor)) + "\n ";
         return top + mid + bot;
-    }
-    public boolean solved() {
-        Corner[] corners = cube.getCorners(corLocs, corSides);
-        for (Corner c : corners) {
-            if (!c.solved()) {
-                return false;
-            }
-        }
-        Edge[] edges = cube.getEdges(edgeLocs);
-        for (Edge e : edges) {
-            if (!e.solved()) {
-                return false;
-            }
-        }
-        return true;
     }
 }

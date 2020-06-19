@@ -129,8 +129,6 @@ public class Corner {
             return;
         }
         if (abs(face) == BLUE) {
-            //System.out.println("Initial loc: " + loc[0] + "," + loc[1] + "," + loc[2]);
-            //System.out.println("Initial side: " + side);
             if (direction == -1) {
                 loc[0] = loc[0] + 1;
                 loc[1] = loc[1] - 1;
@@ -158,8 +156,6 @@ public class Corner {
                     loc[2] = 1;
                 }
             }
-            //System.out.println("Final loc: " + loc[0] + "," + loc[1] + "," + loc[2]);
-            //System.out.println("Final side: " + side);
             return;
         }
         if (abs(face) == RED) {
@@ -268,7 +264,6 @@ public class Corner {
      */
     public int colorOnFace(int face) {
         if (!onSide(face)) {
-            //System.out.println("Wrong side!");
             return 0;
         }
         int[] loc1 = {1,4,2};

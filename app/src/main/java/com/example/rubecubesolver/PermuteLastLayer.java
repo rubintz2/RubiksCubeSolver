@@ -90,7 +90,6 @@ public final class PermuteLastLayer {
         }
         while (solvedEdges + solvedCorners <= 2 && turns < 4) {
             solution.add(cube.U());
-            // U, U
             solvedEdges = 0;
             solvedCorners = 0;
             for (int i = 0; i < 4; i++) {
@@ -161,7 +160,6 @@ public final class PermuteLastLayer {
             }
         }
         if (solvedCorners == 4 && solvedEdges == 1) {
-            // Has to be U perm
             Edge edge = null;
             for (Edge e : edges) {
                 if (e.solved()) {

@@ -55,10 +55,8 @@ public class Edge {
      */
     public void setLoc(int face, int direction) {
         if(!onSide(face)) {
-            System.out.println("WRONG SIDE!");
             return;
         }
-
         // loops through allColors array
         for (int i = 0; i <= 5; i++) {
             // finds the face that is being rotated
@@ -115,7 +113,6 @@ public class Edge {
     }
     public int faceWithColor(int color) {
         if (colors[0] != color && colors[1] != color) {
-            System.out.println("color passed to face on color is not on edge!: " + color + "\n" + this);
             return 0;
         }
         for (int i = -3; i <= 3; i++) {
@@ -126,11 +123,10 @@ public class Edge {
                 return i;
             }
         }
-        System.out.println("Face on color is passing the for loop: " + color + "\n" + this);
         return 0;
     }
     /**
-     * NOTE: For pieces on green side, rotate to the gree
+     * NOTE: For pieces on green side, assume green side faces you
      * @return
      */
     public String toString() {

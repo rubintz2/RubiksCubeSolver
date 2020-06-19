@@ -238,7 +238,6 @@ public class Cube {
                 default:
                     System.out.println("Invalid operation");
             }
-            //System.out.println(t);
         }
         return turns;
     }

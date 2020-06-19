@@ -35,7 +35,6 @@ public final class OrientLastLayer {
                 orientedEdges++;
             }
         }
-        //System.out.println("Oriented edges: " + orientedEdges);
         if (orientedEdges == 0) {
             saveTurns("F U R U' R' F' L F U F' U' L'");
         } else if (orientedEdges == 2) {
@@ -51,7 +50,6 @@ public final class OrientLastLayer {
                 saveTurns("F R U R' U' F'");
             }
         }
-        //System.out.println("Corner orientation: " + cornerOrientation(corners));
         switch (cornerOrientation(corners)) {
             case (1) :
                 while (cube.getCorner(2, -1).getOrient() != 0) {
@@ -73,14 +71,7 @@ public final class OrientLastLayer {
                 saveTurns(parallel);
                 break;
             case (4) :
-//                System.out.println(corners[0]);
-//                System.out.println(corners[0].faceWithColor(YELLOW));
-//                System.out.println(corners[1]);
-//                System.out.println(corners[1].faceWithColor(YELLOW));
-//                System.out.println(corners[2]);
-//                System.out.println(corners[2].faceWithColor(YELLOW));
-//                System.out.println(corners[3]);
-//                System.out.println(corners[3].faceWithColor(YELLOW));
+//
                 while (corners[0].faceWithColor(YELLOW) == RED
                     || corners[1].faceWithColor(YELLOW) == RED
                     || corners[2].faceWithColor(YELLOW) == RED
@@ -123,7 +114,6 @@ public final class OrientLastLayer {
                 orientedCorners++;
             }
         }
-//        System.out.println("Oriented corners: " + orientedCorners);
         if (orientedCorners == 4) {
             return 0;
         } else if (orientedCorners == 1) {
